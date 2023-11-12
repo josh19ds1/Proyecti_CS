@@ -1,0 +1,69 @@
+body {
+    padding: 5%;
+    padding-top: 1.7%;
+    background-color: rgb(153, 231, 248);
+}
+
+form{
+    padding: 1.5%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.Cuestion_box{
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+h1{
+    text-align: center;
+}
+
+h1, h2{
+    color: white;
+}
+
+textarea {
+    width: 300px;
+    height: 75px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #3498db; /* Color del borde */
+    border-radius: 10px; /* Esquinas redondeadas */
+    margin-top: 2px;
+  }
+
+  .radio-label {
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  .radio-input {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    appearance: none; /* Oculta el estilo nativo del input radio */
+    border: 2px solid #3498db; /* Color del borde */
+    border-radius: 50%; /* Hace que el input sea un círculo */
+  }
+
+  .radio-input:checked {
+    background-color: #3498db; /* Color de fondo cuando está seleccionado */
+  }
+
+  .submit-button {
+    background-color: #3498db; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño del texto */
+    border: none; /* Elimina el borde predeterminado */
+    border-radius: 5px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  }
+
+  /* Cambia el estilo al pasar el mouse sobre el botón */
+  .submit-button:hover {
+    background-color: #044b7b; /* Cambia el color de fondo al pasar el mouse */
+  }
