@@ -3,6 +3,7 @@ const router = express.Router();
 const conexion = require('./database/db');
 
 let crro = null;
+let enc = 0;
 
 router.get('/', (req, res) => {
     conexion.query('SELECT * FROM usuarios', (error, results) => {
@@ -76,7 +77,7 @@ router.post('/guardar_respuestas', (req, res) => {
 console.log(crro);
 console.log(respuestas);
 
-/*     // Recorre las respuestas y guárdalas en la base de datos
+    // Recorre las respuestas y guárdalas en la base de datos
     for (const key in respuestas) {
         
         if (key.startsWith('respuesta_')) {
@@ -87,10 +88,10 @@ console.log(respuestas);
             const comentario = respuestas[`comentario_${preguntaId}`];
 
             // Define el query de inserción
-            const query = 'INSERT INTO respuesta (respuesta,comentario,Res_pregunta,Res_correo) VALUES (?, ?, ?, ?)';
+            const query = 'INSERT INTO respuesta (respuesta,comentario,Res_pregunta,Res_correo,Res_encuesta) VALUES (?, ?, ?, ?,?)';
 
             // Ejecuta el query con los datos
-            conexion.query(query, [valorRespuesta, comentario, preguntaId, crro], (error, result) => {
+            conexion.query(query, [valorRespuesta, comentario, preguntaId, crro,enc], (error, result) => {
                 if (error) {
                     console.error('Error al insertar datos en la base de datos: ' + error.message);
                     res.status(500).send('Error al insertar datos en la base de datos');
@@ -100,14 +101,14 @@ console.log(respuestas);
             });
         }
     }
- */
+ 
     res.redirect('/Resultado'); // Redirige al usuario a una página de confirmación
 });
 
 
 
 router.post('/encuesta', (req, res) => {
-    /*
+    
     const { nombreSoftware, tipoSoftware, fechaProgramada, tecnologiaProgramada } = req.body;
 
     // El valor de tipoSoftware se obtendrá como un valor numérico según las opciones seleccionadas en el formulario.
@@ -115,7 +116,7 @@ router.post('/encuesta', (req, res) => {
         console.log("errores en el correo");
 
     } else {
-      
+      enc++;
         // Asumiendo que tienes una tabla llamada 'Software' en tu base de datos con las columnas adecuadas.
         const softwareData = {
             Nombre_Enc: nombreSoftware,
@@ -137,8 +138,8 @@ router.post('/encuesta', (req, res) => {
             }
         });
 
-    } */
-   res.redirect('/encuesta');
+    } 
+ //  res.redirect('/encuesta');
 
 });
 
