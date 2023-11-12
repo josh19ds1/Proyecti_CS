@@ -57,8 +57,8 @@ router.get('/encuesta', (req, res) => {
 
 //Aqui si no pones en donde lo mandas res.redirect <- "/encuesta" no manda el  codigo 
 router.get('/Resultado', (req, res) => {
- 
-    conexion.query('SELECT * FROM `respuesta` WHERE Res_correo= "prueba1@correo.com"', (error, results) => {
+
+    conexion.query('SELECT respuesta.id_Respuesta,respuesta.respuesta,respuesta.comentario,preguntas.preguntas,preguntas.id_Categoria,categoria.Categorias,subcategoria.SubCategorias,respuesta.Res_correo FROM respuesta JOIN preguntas ON preguntas.id_preguntas = respuesta.Res_pregunta JOIN encuesta ON encuesta.id_Encuesta = respuesta.Res_encuesta JOIN categoria on preguntas.id_Categoria = categoria.id_Categoria JOIN subcategoria ON preguntas.id_SubCategorias = subcategoria.id_SubCategorias WHERE respuesta.Res_correo=?',[crro], (error, results) => {
         if (error) {
             throw error;
         } else {
@@ -77,7 +77,7 @@ router.post('/guardar_respuestas', (req, res) => {
 console.log(crro);
 console.log(respuestas);
 
-    // Recorre las respuestas y guárdalas en la base de datos
+   /*  // Recorre las respuestas y guárdalas en la base de datos
     for (const key in respuestas) {
         
         if (key.startsWith('respuesta_')) {
@@ -101,7 +101,7 @@ console.log(respuestas);
             });
         }
     }
- 
+  */
     res.redirect('/Resultado'); // Redirige al usuario a una página de confirmación
 });
 
@@ -109,7 +109,7 @@ console.log(respuestas);
 
 router.post('/encuesta', (req, res) => {
     
-    const { nombreSoftware, tipoSoftware, fechaProgramada, tecnologiaProgramada } = req.body;
+  /*   const { nombreSoftware, tipoSoftware, fechaProgramada, tecnologiaProgramada } = req.body;
 
     // El valor de tipoSoftware se obtendrá como un valor numérico según las opciones seleccionadas en el formulario.
     if (crro == null) {
@@ -138,8 +138,8 @@ router.post('/encuesta', (req, res) => {
             }
         });
 
-    } 
- //  res.redirect('/encuesta');
+    }  */
+   res.redirect('/encuesta');
 
 });
 
