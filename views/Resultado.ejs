@@ -2,103 +2,107 @@
 <html lang="en">
 
 <head>
-    <!-- ... -->
+    <!-- Incluye Chart.js en el head -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ... Otras configuraciones del head ... -->
 </head>
 
 <body>
+
     <%let catg=null%>
-        <%let Nuevcatg=null%>
-            <%let Subc=null%>
-                <%let SubcNueva=null%>
+    <%let Nuevcatg=null%>
+    <%let Subc=null%>
+    <%let SubcNueva=null%>
 
+    <h2>Respondió correctamente</h2>
 
-            <h2>Respondio correctamente</h2>
+    <%let ArrResultado = [] %>
 
-            <div id="respuesta-container">
-                <% results.forEach((res)=> { %>
+    <div id="respuesta-container">
+        <% results.forEach((res) => { %>
+            <% catg = res.Categorias %>
+            <% Subc = res.SubCategorias %>
 
+            <!-- Define ArrResultado fuera del bucle -->
+            <% ArrResultado = [] %>
 
-                    <% catg=res.Categorias %>
-                    <% Subc=res.SubCategorias %>
-                   <!--  Caracteristica -->
-                            <% if(catg !== Nuevcatg){%>
-                                
-                                    <h1><%= catg %></h1>
+            <!-- Caracteristica -->
+            <% if (catg !== Nuevcatg) { %>
+                <h1><%= catg %></h1>
+                <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
+                <% Nuevcatg = catg %>
+            <% } %>
 
-                                    <% Nuevcatg=catg %>
-                            <% }else{ %>
-                            <!-- SubCategorias -->
-                                <% if(Subc !== SubcNueva){%>
-                                    <h2>
-                                        <%= res.SubCategorias %>
-                                    </h2>
-                                    <h4>
-                                        <%= res.respuesta %>
-                                    </h4>
-                                    <% SubcNueva=Subc %>
-                                <% }else{ %>
-                                <h4>
-                                    <%= res.respuesta %>
-                                </h4>
-                                <p><%=res.comentario%></p>
-                                <% } %>
+            <!-- SubCategorias -->
+            <% if (Subc !== SubcNueva) { %>
+                <h2><%= res.SubCategorias %></h2>
+                <h4><%= res.respuesta %></h4>
+                <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
+                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                <% SubcNueva = Subc %>
+            <% } else { %>
+                <h4><%= res.respuesta %></h4>
+                <p><%= res.comentario %></p>
+                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
+            <% } %>
 
-                            <% } %>
-            <% }) %>
-            </div>
-
+            <!-- Incluye el canvas dentro del bucle para cada gráfico -->
             <div>
                 <canvas id="myChart"></canvas>
             </div>
 
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+            <!-- Configuración y datos para la gráfica -->
             <script>
-                // Función para decodificar entidades HTML en una cadena
-                function decodeHTMLEntities(text) {
-                    const textArea = document.createElement('textarea');
-                    textArea.innerHTML = text;
-                    return textArea.value;
+                var labels = null;
+                var dataValues = null;
+
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
+                console.log(rest);
+
+
+                  // Destruir el gráfico anterior antes de crear uno nuevo
+                if (window.myChart) {
+                    window.myChart.destroy();
                 }
 
-                // Tu cadena HTML con entidades HTML
-                const htmlString = '<%= JSON.stringify(results) %>';
+  // Transforma el array de objetos en dos arrays separados
+    var labels = rest.map(item => item.tipo);
+    var dataValues = rest.map(item => item.valor);
 
-                // Decodifica las entidades HTML
-                const jsonString = decodeHTMLEntities(htmlString);
 
-                // Analiza la cadena JSON
-                const respuestaData = JSON.parse(jsonString);
 
-                console.log(respuestaData);
 
-                // Obtiene el contexto del lienzo del gráfico
-                const ctx = document.getElementById('myChart').getContext('2d');
 
-                // Extrae las respuestas y valores del JSON
-                const respuestas = respuestaData.map(res => res.respuesta);
-                const valores = respuestaData.map(res => res.respuesta); // Cambia esto si tienes un campo "valor"
+                var data = {
+        labels: labels, // Etiquetas (tipo)
+        datasets: [{
+            label: 'Datos de Respuestas',
+            data: dataValues, // Datos reales (valor)
+            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'], // Colores de fondo de las barras
+            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'], // Colores de borde de las barras
+            borderWidth: 1
+        }]
+    };
 
-                // Ahora puedes utilizar respuestaData en tu gráfico
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: respuestas,
-                        datasets: [{
-                            label: '# of Votes',
-                            data: valores,
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+    });
             </script>
+
+        <% }) %>
+    </div>
+
 </body>
 
 </html>
