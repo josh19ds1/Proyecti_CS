@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+
+    <title>REsultado</title>
     <!-- Incluye Chart.js en el head -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- ... Otras configuraciones del head ... -->
@@ -13,6 +15,12 @@
     <%let Nuevcatg=null%>
     <%let Subc=null%>
     <%let SubcNueva=null%>
+    
+   <!--  sumar -->
+    <%let Suma=0%>
+    <%let SumResA=[]%>
+
+    
 
 
     <!-- aqui va el array de las respuesta -->
@@ -43,33 +51,36 @@
 
                 <!-- SubCategorias -->
                 <% if (Subc !== SubcNueva) { %>
-                    
+                    <%rn=[]%>
                     <h2><%= res.SubCategorias %></h2>
                     <h4><%= res.respuesta %></h4>
                     <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
                     <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-
+                    <% Suma=Suma + res.respuesta %>
                       <!-- guardando los datos al array  --> 
                       <% Sb.push(res.SubCategorias.toString()) %>
                     <% rn.push(res.respuesta)%>
+                  
                     
                     <% SubcNueva = Subc %>
                 <% } else { %>
                     <h4><%= res.respuesta %></h4>
                     <p><%= res.comentario %></p>
+                    <% Suma = Suma + (res.respuesta === 'ND' ? 0 : parseInt(res.respuesta, 10)) %>
                     <% rn.push(res.respuesta)%>
                     <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
                     <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
 
-                    
+                 
                 <!-- Incluye el canvas dentro del bucle para cada gráfico -->
                 <div>
                     <canvas id="myChart<%= catg + index %>"></canvas>
                 </div>
-                     
-
+                      
+               
                 <% } %>
-     
+              
+                <% SumResA.push(Suma)%>
         
             <!-- Configuración y datos para la gráfica -->
             <script>
@@ -85,35 +96,12 @@
                 var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
                 console.log(ArrSubc);
 
-            /*       // Destruir el gráfico anterior antes de crear uno nuevo
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
- */
+          
+ 
   // Transforma el array de objetos en dos arrays separados
     var labels = rest.map(item => item.tipo);
     var dataValues = rest.map(item => item.valor);
     
-/*     console.log(dataValues);
-
-if (dataValues[0]== Cts ){
-
-    console.log('Soy categoria ');
-    console.log(dataValues[1],dataValues[2]);
-  
-
-
-
-}else{
-    console.log('Soy igual')
-    console.log(dataValues[0]);
-   
-
-}
-
-console.log('datos del array:');
-console.log(Sbx);
- */
 
 
 
@@ -148,7 +136,77 @@ console.log(Sbx);
 
          
         <% }) %>
+        
+    <div>
+        <canvas id="mydChart"></canvas>
     </div>
+    </div>
+
+
+
+
+
+    <script>
+        var SumArrs = JSON.parse('<%- JSON.stringify(SumResA) %>');
+
+
+        // Función para decodificar entidades HTML en una cadena
+        function decodeHTMLEntities(text) {
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+
+        // Tu cadena HTML con entidades HTML
+        const htmlString = '<%= JSON.stringify(results) %>';
+
+        // Decodifica las entidades HTML
+        const jsonString = decodeHTMLEntities(htmlString);
+
+        // Analiza la cadena JSON
+        const respuestaData = JSON.parse(jsonString);
+
+       console.log(SumArrs)
+
+        // Obtiene el contexto del lienzo del gráfico
+        const ln = document.getElementById('mydChart').getContext('2d');
+
+        // Extrae las respuestas y valores del JSON
+        const respuestas = respuestaData.map(res => res.respuesta);
+       
+
+        // Ahora puedes utilizar respuestaData en tu gráfico
+        new Chart(ln, {
+            type: 'bar',
+            data: {
+                labels: SumArrs,
+                datasets: [{
+                    label: '# of Votes',
+                    data: SumArrs,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 

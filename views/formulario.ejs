@@ -34,7 +34,7 @@
             <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_1" value="1">
             <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_1">1: Muy en desacuerdo</label>
             
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_ND" value="ND">
+            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_ND" value="0">
             <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_ND">ND: No aplica</label>
 
             <textarea name="comentario_<%= Pregunta.id_preguntas %>" id="comentario_<%= Pregunta.id_preguntas %>" rows="4" cols="50" placeholder="Añade tu comentario aquí"></textarea>
@@ -51,7 +51,7 @@
             var preguntaId = $(this).attr("name").replace("respuesta_", "");
             var comentarioTextarea = $("#comentario_" + preguntaId);
     
-            if ($(this).val() === "ND") {
+            if ($(this).val() === "0") {
                 comentarioTextarea.prop("disabled", false);
             } else {
                 comentarioTextarea.prop("disabled", true);
