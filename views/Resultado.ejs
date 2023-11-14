@@ -13,10 +13,12 @@
     <%let Nuevcatg=null%>
     <%let Subc=null%>
     <%let SubcNueva=null%>
-    <%let cam=0 %>
 
 
-
+    <!-- aqui va el array de las respuesta -->
+    <%let rn=[] %>
+    <!-- aqui va el array de las subcategorias -->
+    <%let Sb=[] %>
     <h2>Respondió correctamente</h2>
 
     <%let ArrResultado = [] %>
@@ -34,36 +36,54 @@
                 <h1><%= catg %></h1>   
                 <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
                 <% Nuevcatg = catg %>
+                <%rn=[]%>
+                <%Sb=[]%>
+
             <% } %>
 
-            <!-- SubCategorias -->
-            <% if (Subc !== SubcNueva) { %>
-                <h2><%= res.SubCategorias %></h2>
-                <h4><%= res.respuesta %></h4>
-                <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
-                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                <% SubcNueva = Subc %>
-            <% } else { %>
-                <h4><%= res.respuesta %></h4>
-                <p><%= res.comentario %></p>
-                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
-            <% } %>
+                <!-- SubCategorias -->
+                <% if (Subc !== SubcNueva) { %>
+                    
+                    <h2><%= res.SubCategorias %></h2>
+                    <h4><%= res.respuesta %></h4>
+                    <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
+                    <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
 
-            <!-- Incluye el canvas dentro del bucle para cada gráfico -->
-            <div>
-                <canvas id="myChart<%= catg + index %>"></canvas>
-            </div>
+                      <!-- guardando los datos al array  --> 
+                      <% Sb.push(res.SubCategorias.toString()) %>
+                    <% rn.push(res.respuesta)%>
+                    
+                    <% SubcNueva = Subc %>
+                <% } else { %>
+                    <h4><%= res.respuesta %></h4>
+                    <p><%= res.comentario %></p>
+                    <% rn.push(res.respuesta)%>
+                    <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                    <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
 
+                    
+                <!-- Incluye el canvas dentro del bucle para cada gráfico -->
+                <div>
+                    <canvas id="myChart<%= catg + index %>"></canvas>
+                </div>
+                     
+
+                <% } %>
+     
+        
             <!-- Configuración y datos para la gráfica -->
             <script>
               var labels = null;
                 var dataValues = null;
+                var Arrs= <%- JSON.stringify(rn) %>;
+                var ArrSubc = <%- JSON.stringify(Sb) %>;
+
                 var canvasId = 'myChart' + '<%= catg + index %>';
-                var Cts= '<%= catg %>' 
+                var Cts = '<%= catg %>';
+                var Sbx = '<%= SubcNueva %>';
                 var ctx = document.getElementById(canvasId).getContext('2d');
                 var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
-                console.log(Cts)
+                console.log(ArrSubc);
 
             /*       // Destruir el gráfico anterior antes de crear uno nuevo
                 if (window.myChart) {
@@ -74,27 +94,34 @@
     var labels = rest.map(item => item.tipo);
     var dataValues = rest.map(item => item.valor);
     
-    console.log(dataValues);
+/*     console.log(dataValues);
 
 if (dataValues[0]== Cts ){
 
-    console.log('lo soy ');
+    console.log('Soy categoria ');
     console.log(dataValues[1],dataValues[2]);
+  
+
+
+
 }else{
-    console.log('no lo soy')
-    console.log(dataValues[0],dataValues[1]);
+    console.log('Soy igual')
+    console.log(dataValues[0]);
+   
+
 }
 
-
-
+console.log('datos del array:');
+console.log(Sbx);
+ */
 
 
 
     var data = {
-    labels: 'grafica', // Utiliza todos los elementos en el arreglo 'labels'
+    labels:Arrs, 
     datasets: [{
-        label: dataValues,
-        data:dataValues, // Utiliza todos los elementos en el arreglo 'dataValues'
+        label: ArrSubc,
+        data:Arrs,
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1
@@ -119,8 +146,7 @@ if (dataValues[0]== Cts ){
     
             </script>
 
-            <%cam++;%>
-
+         
         <% }) %>
     </div>
 
