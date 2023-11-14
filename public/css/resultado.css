@@ -1,0 +1,15 @@
+   /* Agrega estilos CSS para controlar el tamaño y el margen de las gráficas */
+canvas {
+    width: 20vw;
+    height: 100px;/* Máximo ancho de la gráfica */
+    margin-bottom: 20px; /* Margen inferior entre gráficas */
+    margin-left: 50px;
+}
+
+.chart-container{
+
+
+    position: relative;
+    height: 40vh;
+     width:80vw;
+}

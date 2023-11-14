@@ -3,15 +3,7 @@
 
 <head>
     <title>Resultado</title>
-    <style>
-        /* Agrega estilos CSS para controlar el tamaño y el margen de las gráficas */
-        canvas {
-            max-width: 80vw;
-            height: 60px;/* Máximo ancho de la gráfica */
-            margin-bottom: 20px; /* Margen inferior entre gráficas */
-            margin-left: 50px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/resultado.css">
     <!-- Incluye Chart.js en el head -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- ... Otras configuraciones del head ... -->
@@ -27,6 +19,7 @@
     <!--  sumar -->
     <% let Suma = 0 %>
     <% let SumResA = [] %>
+    <% let CatName = [] %>
 
     <!-- aqui va el array de las respuesta -->
     <% let rn = [] %>
@@ -35,8 +28,12 @@
     <h2>Respondió correctamente</h2>
 
     <% let ArrResultado = [] %>
+    <div id="respuesta-container">  
+        <h3>Encargado:</h3>
+        <% const correos = results.map((res) => res.Res_correo) %>
+        <%= correos.length > 0 ? correos[0] : 'No hay correos disponibles' %>
 
-    <div id="respuesta-container">
+
         <% results.forEach((res, index) => { %>
             <% catg = res.Categorias %>
             <% Subc = res.SubCategorias %>
@@ -48,6 +45,11 @@
             <% if (catg !== Nuevcatg) { %>
                 <h1><%= catg %></h1>
                 <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
+                <% if (Suma > 0){ %>
+                    <% SumResA.push(Suma) %>
+                    <% Suma = 0 %>
+                    <% CatName.push(Nuevcatg) %>
+                <% } %>
                 <% Nuevcatg = catg %>
                 <% rn = [] %>
                 <% Sb = [] %>
@@ -61,10 +63,11 @@
 
                 <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
                 <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                <% Suma = Suma + res.respuesta %>
+                <% Suma = Suma + parseInt(res.respuesta) %>
                 <!-- guardando los datos al array  -->
                 <% Sb.push(res.SubCategorias.toString()) %>
                 <% rn.push(res.respuesta) %>
+                
 
                 <% SubcNueva = Subc %>
             <% } else { %>
@@ -75,67 +78,82 @@
                 <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
 
                 <!-- Incluye el canvas dentro del bucle para cada gráfico -->
-                <div>
+                <div class="chart-container" >
                     <canvas id="myChart<%= catg + index %>"></canvas>
                 </div>
                 <h4>Comentarios del evaluador: </h4>
                 <h5><%= res.comentario %></h5>
             <% } %>
 
-            <% SumResA.push(Suma) %>
 
-            <!-- Configuración y datos para la gráfica -->
-            <script>
-                var labels = null;
-                var dataValues = null;
-                var Arrs = <%- JSON.stringify(rn) %>;
-                var ArrSubc = <%- JSON.stringify(Sb) %>;
 
-                var canvasId = 'myChart' + '<%= catg + index %>';
-                var Cts = '<%= catg %>';
-                var Sbx = '<%= SubcNueva %>';
-                var ctx = document.getElementById(canvasId).getContext('2d');
-                var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
-                console.log(ArrSubc);
 
-                // Transforma el array de objetos en dos arrays separados
-                var labels = rest.map(item => item.tipo);
-                var dataValues = rest.map(item => item.valor);
+           <!-- Configuración y datos para la gráfica -->
+           <script>
+            var labels = null;
+            var dataValues = null;
+            var Arrs = JSON.parse('<%- JSON.stringify(rn) %>');
+            var ArrSubc = JSON.parse('<%- JSON.stringify(Sb) %>');
 
+            var canvasId = 'myChart' + '<%= catg + index %>';
+            var Cts = '<%= catg %>';
+            var Sbx = '<%= SubcNueva %>';
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
+            console.log(ArrSubc);
+
+            // Transforma el array de objetos en dos arrays separados
+            var labels = rest.map(item => item.tipo);
+            var dataValues = rest.map(item => item.valor);
+                // Función para generar un color aleatorio en formato rgba
+                function getRandomColor() {
+                    var r = Math.floor(Math.random() * 256);
+                    var g = Math.floor(Math.random() * 256);
+                    var b = Math.floor(Math.random() * 256);
+                    var alpha = 0.2; // Puedes ajustar la transparencia aquí
+                    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                }
+
+                // Crear un array de colores aleatorios para el fondo y el borde
+                var backgroundColors = Array.from({ length: Arrs.length }, () => getRandomColor());
+                var borderColors = backgroundColors.map(color => color.replace('0.2', '1'));
+
+                // Definir el objeto data con colores aleatorios
                 var data = {
                     labels: Arrs,
                     datasets: [{
                         label: ArrSubc,
                         data: Arrs,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
                         borderWidth: 1
                     }]
                 };
-
-                var options = {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+            var options = {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                };
-                var myChart = new Chart(ctx, {
-                    type: 'bar', // Cambiado a 'bar' para un gráfico de barras
-                    data: data,
-                    options: options
-                });
-            </script>
+                }
+            };
+            var myChart = new Chart(ctx, {
+                type: 'bar', // Cambiado a 'bar' para un gráfico de barras
+                data: data,
+                options: options
+            });
+        </script>
+
 
         <% }) %>
 
-        <div>
+        <div class="chart-container" >
             <canvas id="mydChart"></canvas>
         </div>
     </div>
 
     <script>
         var SumArrs = JSON.parse('<%- JSON.stringify(SumResA) %>');
+        var NameArrs = JSON.parse('<%- JSON.stringify(CatName) %>');
 
         // Función para decodificar entidades HTML en una cadena
         function decodeHTMLEntities(text) {
@@ -153,7 +171,7 @@
         // Analiza la cadena JSON
         const respuestaData = JSON.parse(jsonString);
 
-        console.log(SumArrs)
+        console.log(NameArrs)
 
         // Obtiene el contexto del lienzo del gráfico
         const ln = document.getElementById('mydChart').getContext('2d');
@@ -165,7 +183,7 @@
         new Chart(ln, {
             type: 'pie',
             data: {
-                labels: SumArrs,
+                labels: NameArrs,
                 datasets: [{
                     label: '# of Votes',
                     data: SumArrs,

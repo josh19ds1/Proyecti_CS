@@ -1,57 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <title>Iniciar Sesión</title>
-    <style>
-        /* Estilo para centrar el título "Bienvenido" */
-        .centered-title {
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Inicio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active"  href="/Consulta">Preguntas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Resultado">Resultado</a>
-                    </li>
-                </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/IndexStile.css" /> 
+    <!-- icons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav">
+        <a href="#" class="nav_logo">EvaluaPlus</a>
+        <button class="button" id="form-open">Login</button>
+      </nav>
+    </header>
+    <!-- Home -->
+    <section class="home">
+      <!-- Cube -->
+      <div class="container">
+        <div class="cube">
+            <div style="--x:-1;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+            <div style="--x:0;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+            <div style="--x:1;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
             </div>
         </div>
-    </nav>
-
-    <div class="container mt-5">
-        <h2 class="centered-title">Bienvenido</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <form action="/Consulta" method="POST" class="mt-4">
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="correo" name="correo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for "contrasena" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasena" name="contraseña" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                </form>
+        <div class="cube">
+            <div style="--x:-1;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+            <div style="--x:0;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+            <div style="--x:1;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+        </div>
+        <div class="cube">
+            <div style="--x:-1;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+            <div style="--x:0;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
+            </div>
+            <div style="--x:1;--y:0;">
+                <span style="--i:3;"></span>
+                <span style="--i:2;"></span>
+                <span style="--i:1;"></span>
             </div>
         </div>
     </div>
-    
-    <script src="js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-</body>
+      <div class="form_container">
+        <i class="uil uil-times form_close"></i>
+        <!-- Login Form -->
+        <div class="form login_form">
+          <form action="/Consulta" method="POST">
+            <h2>Login</h2>
+            <div class="input_box">
+              <input type="email" id="correo" name="correo" placeholder="Ingresa tu Email" required />
+              <i class="uil uil-envelope-alt email"></i>
+            </div>
+            <div class="input_box">
+              <input type="password"id="contrasena" name="contraseña" placeholder="Ingresa tu Contraseña" required />
+              <i class="uil uil-lock password"></i>
+              <i class="uil uil-eye-slash pw_hide"></i>
+            </div>
+            <button type="submit" class="button">Iniciar Sesion</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- Login Hide/Show Script -->
+    <script src="/js/javapro/script.js"></script>
+  </body>
 </html>
