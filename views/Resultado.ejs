@@ -13,13 +13,16 @@
     <%let Nuevcatg=null%>
     <%let Subc=null%>
     <%let SubcNueva=null%>
+    <%let cam=0 %>
+
+
 
     <h2>Respondió correctamente</h2>
 
     <%let ArrResultado = [] %>
 
     <div id="respuesta-container">
-        <% results.forEach((res) => { %>
+        <% results.forEach((res,index) => { %>
             <% catg = res.Categorias %>
             <% Subc = res.SubCategorias %>
 
@@ -28,7 +31,7 @@
 
             <!-- Caracteristica -->
             <% if (catg !== Nuevcatg) { %>
-                <h1><%= catg %></h1>
+                <h1><%= catg %></h1>   
                 <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
                 <% Nuevcatg = catg %>
             <% } %>
@@ -49,42 +52,54 @@
 
             <!-- Incluye el canvas dentro del bucle para cada gráfico -->
             <div>
-                <canvas id="myChart"></canvas>
+                <canvas id="myChart<%= catg + index %>"></canvas>
             </div>
 
             <!-- Configuración y datos para la gráfica -->
             <script>
-                var labels = null;
+              var labels = null;
                 var dataValues = null;
-
-                var ctx = document.getElementById('myChart').getContext('2d');
+                var canvasId = 'myChart' + '<%= catg + index %>';
+                var Cts= '<%= catg %>' 
+                var ctx = document.getElementById(canvasId).getContext('2d');
                 var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
-                console.log(rest);
+                console.log(Cts)
 
-
-                  // Destruir el gráfico anterior antes de crear uno nuevo
+            /*       // Destruir el gráfico anterior antes de crear uno nuevo
                 if (window.myChart) {
                     window.myChart.destroy();
                 }
-
+ */
   // Transforma el array de objetos en dos arrays separados
     var labels = rest.map(item => item.tipo);
     var dataValues = rest.map(item => item.valor);
+    
+    console.log(dataValues);
+
+if (dataValues[0]== Cts ){
+
+    console.log('lo soy ');
+    console.log(dataValues[1],dataValues[2]);
+}else{
+    console.log('no lo soy')
+    console.log(dataValues[0],dataValues[1]);
+}
 
 
 
 
 
-                var data = {
-        labels: labels, // Etiquetas (tipo)
-        datasets: [{
-            label: 'Datos de Respuestas',
-            data: dataValues, // Datos reales (valor)
-            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'], // Colores de fondo de las barras
-            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'], // Colores de borde de las barras
-            borderWidth: 1
-        }]
-    };
+
+    var data = {
+    labels: 'grafica', // Utiliza todos los elementos en el arreglo 'labels'
+    datasets: [{
+        label: dataValues,
+        data:dataValues, // Utiliza todos los elementos en el arreglo 'dataValues'
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+    }]
+};
 
     var options = {
         scales: {
@@ -94,11 +109,17 @@
         }
     };
     var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: options
-    });
+    type: 'bar', // Cambiado a 'bar' para un gráfico de barras
+    data: data,
+    options: options
+});
+
+
+
+    
             </script>
+
+            <%cam++;%>
 
         <% }) %>
     </div>

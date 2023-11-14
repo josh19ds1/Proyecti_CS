@@ -74,10 +74,7 @@ router.get('/Resultado', (req, res) => {
 
 router.post('/guardar_respuestas', (req, res) => {
     const respuestas = req.body; // Obtiene todas las respuestas del formulario
-console.log(crro);
-console.log(respuestas);
-
-    // Recorre las respuestas y guárdalas en la base de datos
+ /*    // Recorre las respuestas y guárdalas en la base de datos
     for (const key in respuestas) {
         
         if (key.startsWith('respuesta_')) {
@@ -100,7 +97,7 @@ console.log(respuestas);
                 }
             });
         }
-    }
+    } */
   
     res.redirect('/Resultado'); // Redirige al usuario a una página de confirmación
 });
