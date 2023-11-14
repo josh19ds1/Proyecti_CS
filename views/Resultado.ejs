@@ -2,8 +2,16 @@
 <html lang="en">
 
 <head>
-
-    <title>REsultado</title>
+    <title>Resultado</title>
+    <style>
+        /* Agrega estilos CSS para controlar el tamaño y el margen de las gráficas */
+        canvas {
+            max-width: 80vw;
+            height: 60px;/* Máximo ancho de la gráfica */
+            margin-bottom: 20px; /* Margen inferior entre gráficas */
+            margin-left: 50px;
+        }
+    </style>
     <!-- Incluye Chart.js en el head -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- ... Otras configuraciones del head ... -->
@@ -11,28 +19,25 @@
 
 <body>
 
-    <%let catg=null%>
-    <%let Nuevcatg=null%>
-    <%let Subc=null%>
-    <%let SubcNueva=null%>
-    
-   <!--  sumar -->
-    <%let Suma=0%>
-    <%let SumResA=[]%>
+    <% let catg = null %>
+    <% let Nuevcatg = null %>
+    <% let Subc = null %>
+    <% let SubcNueva = null %>
 
-    
-
+    <!--  sumar -->
+    <% let Suma = 0 %>
+    <% let SumResA = [] %>
 
     <!-- aqui va el array de las respuesta -->
-    <%let rn=[] %>
+    <% let rn = [] %>
     <!-- aqui va el array de las subcategorias -->
-    <%let Sb=[] %>
+    <% let Sb = [] %>
     <h2>Respondió correctamente</h2>
 
-    <%let ArrResultado = [] %>
+    <% let ArrResultado = [] %>
 
     <div id="respuesta-container">
-        <% results.forEach((res,index) => { %>
+        <% results.forEach((res, index) => { %>
             <% catg = res.Categorias %>
             <% Subc = res.SubCategorias %>
 
@@ -41,52 +46,49 @@
 
             <!-- Caracteristica -->
             <% if (catg !== Nuevcatg) { %>
-                <h1><%= catg %></h1>   
+                <h1><%= catg %></h1>
                 <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
                 <% Nuevcatg = catg %>
-                <%rn=[]%>
-                <%Sb=[]%>
+                <% rn = [] %>
+                <% Sb = [] %>
 
             <% } %>
 
-                <!-- SubCategorias -->
-                <% if (Subc !== SubcNueva) { %>
-                    <%rn=[]%>
-                    <h2><%= res.SubCategorias %></h2>
-                    <h4><%= res.respuesta %></h4>
-                    <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
-                    <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                    <% Suma=Suma + res.respuesta %>
-                      <!-- guardando los datos al array  --> 
-                      <% Sb.push(res.SubCategorias.toString()) %>
-                    <% rn.push(res.respuesta)%>
-                  
-                    
-                    <% SubcNueva = Subc %>
-                <% } else { %>
-                    <h4><%= res.respuesta %></h4>
-                    <p><%= res.comentario %></p>
-                    <% Suma = Suma + (res.respuesta === 'ND' ? 0 : parseInt(res.respuesta, 10)) %>
-                    <% rn.push(res.respuesta)%>
-                    <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                    <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
+            <!-- SubCategorias -->
+            <% if (Subc !== SubcNueva) { %>
+                <% rn = [] %>
+                <h2><%= res.SubCategorias %></h2>
 
-                 
+                <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
+                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                <% Suma = Suma + res.respuesta %>
+                <!-- guardando los datos al array  -->
+                <% Sb.push(res.SubCategorias.toString()) %>
+                <% rn.push(res.respuesta) %>
+
+                <% SubcNueva = Subc %>
+            <% } else { %>
+
+                <% Suma = Suma + (res.respuesta === 'ND' ? 0 : parseInt(res.respuesta, 10)) %>
+                <% rn.push(res.respuesta) %>
+                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
+
                 <!-- Incluye el canvas dentro del bucle para cada gráfico -->
                 <div>
                     <canvas id="myChart<%= catg + index %>"></canvas>
                 </div>
-                      
-               
-                <% } %>
-              
-                <% SumResA.push(Suma)%>
-        
+                <h4>Comentarios del evaluador: </h4>
+                <h5><%= res.comentario %></h5>
+            <% } %>
+
+            <% SumResA.push(Suma) %>
+
             <!-- Configuración y datos para la gráfica -->
             <script>
-              var labels = null;
+                var labels = null;
                 var dataValues = null;
-                var Arrs= <%- JSON.stringify(rn) %>;
+                var Arrs = <%- JSON.stringify(rn) %>;
                 var ArrSubc = <%- JSON.stringify(Sb) %>;
 
                 var canvasId = 'myChart' + '<%= catg + index %>';
@@ -96,59 +98,44 @@
                 var rest = JSON.parse('<%- JSON.stringify(ArrResultado) %>');
                 console.log(ArrSubc);
 
-          
- 
-  // Transforma el array de objetos en dos arrays separados
-    var labels = rest.map(item => item.tipo);
-    var dataValues = rest.map(item => item.valor);
-    
+                // Transforma el array de objetos en dos arrays separados
+                var labels = rest.map(item => item.tipo);
+                var dataValues = rest.map(item => item.valor);
 
+                var data = {
+                    labels: Arrs,
+                    datasets: [{
+                        label: ArrSubc,
+                        data: Arrs,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                };
 
-
-    var data = {
-    labels:Arrs, 
-    datasets: [{
-        label: ArrSubc,
-        data:Arrs,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-    }]
-};
-
-    var options = {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    };
-    var myChart = new Chart(ctx, {
-    type: 'bar', // Cambiado a 'bar' para un gráfico de barras
-    data: data,
-    options: options
-});
-
-
-
-    
+                var options = {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                };
+                var myChart = new Chart(ctx, {
+                    type: 'bar', // Cambiado a 'bar' para un gráfico de barras
+                    data: data,
+                    options: options
+                });
             </script>
 
-         
         <% }) %>
-        
-    <div>
-        <canvas id="mydChart"></canvas>
+
+        <div>
+            <canvas id="mydChart"></canvas>
+        </div>
     </div>
-    </div>
-
-
-
-
 
     <script>
         var SumArrs = JSON.parse('<%- JSON.stringify(SumResA) %>');
-
 
         // Función para decodificar entidades HTML en una cadena
         function decodeHTMLEntities(text) {
@@ -166,18 +153,17 @@
         // Analiza la cadena JSON
         const respuestaData = JSON.parse(jsonString);
 
-       console.log(SumArrs)
+        console.log(SumArrs)
 
         // Obtiene el contexto del lienzo del gráfico
         const ln = document.getElementById('mydChart').getContext('2d');
 
         // Extrae las respuestas y valores del JSON
         const respuestas = respuestaData.map(res => res.respuesta);
-       
 
         // Ahora puedes utilizar respuestaData en tu gráfico
         new Chart(ln, {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: SumArrs,
                 datasets: [{
@@ -195,18 +181,6 @@
             }
         });
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 
