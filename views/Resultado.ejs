@@ -34,11 +34,19 @@
                 <%let SubcNueva=null%>
 
 
+<<<<<<< Updated upstream
             <h2>Respondio correctamente</h2>
+=======
+    <!--  sumar -->
+    <% let Suma = 0 %>
+    <% let SumResA = [] %>
+    <% let CatName = [] %>
+>>>>>>> Stashed changes
 
             <div id="respuesta-container">
                 <% results.forEach((res)=> { %>
 
+<<<<<<< Updated upstream
 
                     <% catg=res.Categorias %>
                     <% Subc=res.SubCategorias %>
@@ -46,6 +54,13 @@
                             <% if(catg !== Nuevcatg){%>
                                 
                                     <h1><%= catg %></h1>
+=======
+    <% let ArrResultado = [] %>
+    <div id="respuesta-container">
+        <% results.forEach((res, index) => { %>
+            <% catg = res.Categorias %>
+            <% Subc = res.SubCategorias %>
+>>>>>>> Stashed changes
 
                                     <% Nuevcatg=catg %>
                             <% } %>
@@ -65,9 +80,24 @@
                                 <p><%=res.comentario%></p>
                                 <% } %>
 
+<<<<<<< Updated upstream
                             <%  %>
             <% }) %>
             </div>
+=======
+            <!-- Caracteristica -->
+            <% if (catg !== Nuevcatg) { %>
+                <h1><%= catg %></h1>
+                <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
+                <% if (Suma > 0){ %>
+                    <% SumResA.push(Suma) %>
+                    <% Suma = 0 %>
+                    <% CatName.push(Nuevcatg) %>
+                <% } %>
+                <% Nuevcatg = catg %>
+                <% rn = [] %>
+                <% Sb = [] %>
+>>>>>>> Stashed changes
 
             <div>
                 <canvas id="myChart"></canvas>
@@ -79,10 +109,11 @@
 =======
                 <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
                 <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                <% Suma = Suma + res.respuesta %>
+                <% Suma = Suma + parseInt(res.respuesta) %>
                 <!-- guardando los datos al array  -->
                 <% Sb.push(res.SubCategorias.toString()) %>
                 <% rn.push(res.respuesta) %>
+                
 
                 <% SubcNueva = Subc %>
             <% } else { %>
@@ -99,8 +130,6 @@
                 <h4>Comentarios del evaluador: </h4>
                 <h5><%= res.comentario %></h5>
             <% } %>
-
-            <% SumResA.push(Suma) %>
 
             <!-- Configuración y datos para la gráfica -->
 >>>>>>> Stashed changes
@@ -162,6 +191,7 @@
 
     <script>
         var SumArrs = JSON.parse('<%- JSON.stringify(SumResA) %>');
+        var NameArrs = JSON.parse('<%- JSON.stringify(CatName) %>');
 
         // Función para decodificar entidades HTML en una cadena
         function decodeHTMLEntities(text) {
@@ -179,7 +209,7 @@
         // Analiza la cadena JSON
         const respuestaData = JSON.parse(jsonString);
 
-        console.log(SumArrs)
+        console.log(NameArrs)
 
         // Obtiene el contexto del lienzo del gráfico
         const ln = document.getElementById('mydChart').getContext('2d');
@@ -191,7 +221,7 @@
         new Chart(ln, {
             type: 'pie',
             data: {
-                labels: SumArrs,
+                labels: NameArrs,
                 datasets: [{
                     label: '# of Votes',
                     data: SumArrs,

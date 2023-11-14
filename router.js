@@ -139,9 +139,13 @@ router.post('/encuesta', (req, res) => {
         });
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     }  */
 =======
     }  */ 
+>>>>>>> Stashed changes
+=======
+    }   */
 >>>>>>> Stashed changes
    res.redirect('/encuesta');
 
