@@ -2,7 +2,29 @@
 <html lang="en">
 
 <head>
+<<<<<<< Updated upstream
     <!-- ... -->
+=======
+    <title>Resultado</title>
+    <style>
+        /* Agrega estilos CSS para controlar el tamaño y el margen de las gráficas */
+        .resuc {
+            max-width: 60vw;
+            max-height: 50vh;/* Máximo ancho de la gráfica */
+            margin-bottom: 20px; /* Margen inferior entre gráficas */
+            margin-left: 50px;
+        }
+        .glob{
+            max-width: 80vw;
+            max-height: 70vh;/* Máximo ancho de la gráfica */
+            margin-bottom: 20px; /* Margen inferior entre gráficas */
+            margin-left: 50px;
+        }
+    </style>
+    <!-- Incluye Chart.js en el head -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ... Otras configuraciones del head ... -->
+>>>>>>> Stashed changes
 </head>
 
 <body>
@@ -53,6 +75,35 @@
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<<<<<<< Updated upstream
+=======
+                <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
+                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                <% Suma = Suma + res.respuesta %>
+                <!-- guardando los datos al array  -->
+                <% Sb.push(res.SubCategorias.toString()) %>
+                <% rn.push(res.respuesta) %>
+
+                <% SubcNueva = Subc %>
+            <% } else { %>
+
+                <% Suma = Suma + (res.respuesta === 'ND' ? 0 : parseInt(res.respuesta, 10)) %>
+                <% rn.push(res.respuesta) %>
+                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
+
+                <!-- Incluye el canvas dentro del bucle para cada gráfico -->
+                <div>
+                    <canvas id="myChart<%= catg + index %>" class="resuc"></canvas>
+                </div>
+                <h4>Comentarios del evaluador: </h4>
+                <h5><%= res.comentario %></h5>
+            <% } %>
+
+            <% SumResA.push(Suma) %>
+
+            <!-- Configuración y datos para la gráfica -->
+>>>>>>> Stashed changes
             <script>
                 // Función para decodificar entidades HTML en una cadena
                 function decodeHTMLEntities(text) {
@@ -99,6 +150,65 @@
                     }
                 });
             </script>
+<<<<<<< Updated upstream
+=======
+
+        <% }) %>
+
+        <div>
+            <canvas id="mydChart" class="glob"></canvas>
+        </div>
+    </div>
+
+    <script>
+        var SumArrs = JSON.parse('<%- JSON.stringify(SumResA) %>');
+
+        // Función para decodificar entidades HTML en una cadena
+        function decodeHTMLEntities(text) {
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+
+        // Tu cadena HTML con entidades HTML
+        const htmlString = '<%= JSON.stringify(results) %>';
+
+        // Decodifica las entidades HTML
+        const jsonString = decodeHTMLEntities(htmlString);
+
+        // Analiza la cadena JSON
+        const respuestaData = JSON.parse(jsonString);
+
+        console.log(SumArrs)
+
+        // Obtiene el contexto del lienzo del gráfico
+        const ln = document.getElementById('mydChart').getContext('2d');
+
+        // Extrae las respuestas y valores del JSON
+        const respuestas = respuestaData.map(res => res.respuesta);
+
+        // Ahora puedes utilizar respuestaData en tu gráfico
+        new Chart(ln, {
+            type: 'pie',
+            data: {
+                labels: SumArrs,
+                datasets: [{
+                    label: '# of Votes',
+                    data: SumArrs,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+>>>>>>> Stashed changes
 </body>
 
 </html>

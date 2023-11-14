@@ -112,7 +112,7 @@ router.post('/encuesta', (req, res) => {
   /*   const { nombreSoftware, tipoSoftware, fechaProgramada, tecnologiaProgramada } = req.body;
 
     // El valor de tipoSoftware se obtendrá como un valor numérico según las opciones seleccionadas en el formulario.
-    if (crro == null) {
+    /*if (crro == null) {
         console.log("errores en el correo");
 
     } else {
@@ -138,7 +138,11 @@ router.post('/encuesta', (req, res) => {
             }
         });
 
+<<<<<<< Updated upstream
     }  */
+=======
+    }  */ 
+>>>>>>> Stashed changes
    res.redirect('/encuesta');
 
 });
