@@ -1,15 +1,72 @@
    /* Agrega estilos CSS para controlar el tamaño y el margen de las gráficas */
+
+   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: "Poppins", sans-serif;
+   }
+
 canvas {
     width: 20vw;
     height: 100px;/* Máximo ancho de la gráfica */
     margin-bottom: 20px; /* Margen inferior entre gráficas */
     margin-left: 50px;
+
+    
 }
 
-.chart-container{
 
 
+.chart-container1{
+
+    
     position: relative;
     height: 40vh;
      width:80vw;
+     display: flex;
+     flex-direction: column; /* Optional: If you want to center vertically */
+     justify-content: center;
+     align-items: center;
+     margin-top: 50px;
+
+}
+
+.chart-container2{
+
+    
+    position: relative;
+    height: 60vh;
+     width:100vw;
+     display: flex;
+     flex-direction: column; /* Optional: If you want to center vertically */
+     justify-content: center;
+     align-items: center;
+     margin-top: 50px;
+
+}
+
+
+#respuesta-container {
+    display: flex;
+    flex-direction: column; /* Optional: If you want to center vertically */
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+
+}
+
+.cont1{
+    position: relative;
+    height: 40vh;
+     width:80vw;
+     display: flex;
+     flex-direction: column; /* Optional: If you want to center vertically */
+     justify-content: center;
+     align-items: center;
+     margin-top: 50px;
+     background-color: azure;
+
 }

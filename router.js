@@ -74,7 +74,7 @@ router.get('/Resultado', (req, res) => {
 
 router.post('/guardar_respuestas', (req, res) => {
     const respuestas = req.body; // Obtiene todas las respuestas del formulario
-console.log(crro);
+ console.log(crro);
 console.log(respuestas);
 
     // Recorre las respuestas y guárdalas en la base de datos
@@ -100,7 +100,7 @@ console.log(respuestas);
                 }
             });
         }
-    }  
+    }   
   
     res.redirect('/Resultado'); // Redirige al usuario a una página de confirmación
 });
@@ -109,7 +109,7 @@ console.log(respuestas);
 
 router.post('/encuesta', (req, res) => {
      
-    const { nombreSoftware, tipoSoftware, fechaProgramada, tecnologiaProgramada } = req.body;
+     const { nombreSoftware, tipoSoftware, fechaProgramada, tecnologiaProgramada } = req.body;
 
     // El valor de tipoSoftware se obtendrá como un valor numérico según las opciones seleccionadas en el formulario.
     if (crro == null) {
@@ -138,7 +138,7 @@ router.post('/encuesta', (req, res) => {
             }
         });
 
-    }    
+    }     
    res.redirect('/encuesta');
 
 });
