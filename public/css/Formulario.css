@@ -1,7 +1,7 @@
 body {
     padding: 5%;
     padding-top: 1.7%;
-    background-color: rgb(153, 231, 248);
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
 form{
@@ -11,18 +11,31 @@ form{
 }
 
 .Cuestion_box{
+    display: flex;
+    flex-direction: column;
     padding: 3px;
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     margin-bottom: 5px;
 }
 
+
+
 h1{
+    font-size: 5rem;
     text-align: center;
+}
+
+h2{
+  font-size: 3.5rem;
 }
 
 h1, h2{
     color: white;
+}
+
+h4{
+  font-size: 2rem;
 }
 
 textarea {
@@ -35,14 +48,19 @@ textarea {
     margin-top: 2px;
   }
 
+  .radio-area{
+    display: row;
+    padding: 2px;
+  }
+
   .radio-label {
     margin-right: 10px;
-    font-size: 16px;
+    font-size: 1.2rem;
   }
 
   .radio-input {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     margin-right: 5px;
     appearance: none; /* Oculta el estilo nativo del input radio */
     border: 2px solid #3498db; /* Color del borde */

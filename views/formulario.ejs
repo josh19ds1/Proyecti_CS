@@ -19,24 +19,30 @@
         <div class="Cuestion_box">
             <h4><%= Pregunta.preguntas %></h4>
         <div>
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_5" value="5">
-            <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_5">5: Muy de acuerdo</label>
-            
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_4" value="4">
-            <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_4">4: De acuerdo</label>
-            
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_3" value="3">
-            <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_3">3: Ni de acuerdo, Ni en desacuerdo</label>
-            
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_2" value="2">
-            <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_2">2: En desacuerdo</label>
-            
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_1" value="1">
-            <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_1">1: Muy en desacuerdo</label>
-            
-            <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_ND" value="0">
-            <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_ND">ND: No aplica</label>
-
+            <div class="radio-area">
+                <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_5" value="5">
+                <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_5">5: Muy de acuerdo</label>
+            </div>
+            <div class="radio-area">
+                <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_4" value="4">
+                <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_4">4: De acuerdo</label>
+            </div>
+            <div class="radio-area">
+                <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_3" value="3">
+                <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_3">3: Ni de acuerdo, Ni en desacuerdo</label>
+            </div>
+            <div class="radio-area">
+                <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_2" value="2">
+                <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_2">2: En desacuerdo</label>
+            </div>
+            <div class="radio-area">
+                <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_1" value="1">
+                <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_1">1: Muy en desacuerdo</label>
+             </div>
+             <div class="radio-area">
+                <input type="radio" class="radio-input" name="respuesta_<%= Pregunta.id_preguntas %>" id="respuesta_<%= Pregunta.id_preguntas %>_ND" value="0">
+                <label class="radio-label" for="respuesta_<%= Pregunta.id_preguntas %>_ND">ND: No aplica</label>
+            </div>
             <textarea name="comentario_<%= Pregunta.id_preguntas %>" id="comentario_<%= Pregunta.id_preguntas %>" rows="4" cols="50" placeholder="Añade tu comentario aquí"></textarea>
         </div>
     </div>
