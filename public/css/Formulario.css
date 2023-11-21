@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
 body {
     padding: 5%;
     padding-top: 1.7%;
@@ -39,13 +50,13 @@ h4{
 }
 
 textarea {
-    width: 300px;
-    height: 75px;
+    width: 400px;
+    height: 100px;
     padding: 10px;
     font-size: 16px;
     border: 2px solid #3498db; /* Color del borde */
     border-radius: 10px; /* Esquinas redondeadas */
-    margin-top: 2px;
+    margin-top: 10px;
   }
 
   .radio-area{
