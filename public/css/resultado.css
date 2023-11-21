@@ -6,54 +6,89 @@
      padding: 0;
      box-sizing: border-box;
      font-family: "Poppins", sans-serif;
+
    }
 
+ 
+   body {
+    margin: 0;
+    padding: 0;
+  }
+
 canvas {
-    width: 20vw;
-    height: 100px;/* Máximo ancho de la gráfica */
+    max-width: 75%;
+    max-height: 700px;/* Máximo ancho de la gráfica */
     margin-bottom: 20px; /* Margen inferior entre gráficas */
-    margin-left: 50px;
-
-    
+    background-color: white;
+    position: relative;
+    left: 15vh;
+    margin-top: 50px;
+    font-size: 100px;
 }
 
 
-
-.chart-container1{
-
-    
-    position: relative;
-    height: 40vh;
-     width:80vw;
-     display: flex;
-     flex-direction: column; /* Optional: If you want to center vertically */
-     justify-content: center;
-     align-items: center;
-     margin-top: 50px;
-
-}
-
-.chart-container2{
-
-    
-    position: relative;
-    height: 60vh;
-     width:100vw;
-     display: flex;
-     flex-direction: column; /* Optional: If you want to center vertically */
-     justify-content: center;
-     align-items: center;
-     margin-top: 50px;
-
+.imagen {
+    position: absolute;
+    top: 134px;
+    border-radius: 50%;
+    width: 350px;
+    right: 150px;
 }
 
 
-#respuesta-container {
-    display: flex;
-    flex-direction: column; /* Optional: If you want to center vertically */
-    justify-content: center;
-    align-items: center;
-    position: relative;
+.titulos{
+  
+    background-color: #7e41a4;
+    width: 100%;
+    height: 75vh;
+    top: 0;
+}
+
+.titulos,h1{
+   
+    font-size: 4.5rem;
+    color: white;
+    text-align: center;
+    
+  
+}
+h3,h2{
+    
+  font-size: 2.5rem;
+  text-align: left;
+  margin-left: 45px;
+ 
+ color: white;
+}
+
+h5{
+
+    font-size: 1.9rem;
+    text-align: left;
+    margin-left:100px;
+  
+  }
+  
+  h4{
+
+    font-size: 1.9rem;
+    text-align: left;
+    margin-left:100px;
+    margin-top: 100px;
+    color: whitesmoke;
+
+  }
+
+.tituloG{
+    text-align: center;
+    margin-top: 150px;
+
+}
+
+.Contenido{
+ 
+   
+    background-color: #6b3091;
 
 
 }
@@ -61,12 +96,11 @@ canvas {
 .cont1{
     position: relative;
     height: 40vh;
-     width:80vw;
-     display: flex;
-     flex-direction: column; /* Optional: If you want to center vertically */
-     justify-content: center;
-     align-items: center;
-     margin-top: 50px;
-     background-color: azure;
+    width: 100%;
+  
+    align-items: center;
+    margin-top: 50px;
+    background-color: azure;
+    text-align: left;
 
 }

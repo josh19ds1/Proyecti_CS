@@ -26,16 +26,34 @@
     <!-- aqui va el array de las subcategorias -->
     <% let Sb = [] %>
     
+    <div id="contenedor">
 
+
+    
     <% let ArrResultado = [] %>
     <div id="respuesta-container">  
-        <h1>Respondió correctamente</h1>
-        <h2>Encargado:</h2>
-        <% const correos = results.map((res) => res.Res_correo) %>
-        <%= correos.length > 0 ? correos[0] : 'No hay correos disponibles' %>
 
+        <Div class="titulos">
 
+            <h1>Resultado De La Encuesta:</h1>
+            <h2>Correo del encargado:</h2>
+            <% const correos = results.map((res) => res.Res_correo) %>
+            <h5> <%= correos.length > 0 ? correos[0] : 'No hay correos disponibles' %></h5>
+            <h3>Usuario:</h3>
+            <h5>Juan Peres</h5>   
+            <h3>Fecha:</h3>
+            <h5>21/11/2023</h5>
+
+            
+                <img class="imagen" src="/img/usuario.webp" alt="usuario">
+           
+        </Div>
+      
+
+    
         <% results.forEach((res, index) => { %>
+            <div class="Contenido">
+
             <% catg = res.Categorias %>
             <% Subc = res.SubCategorias %>
 
@@ -44,58 +62,62 @@
 
             <!-- Caracteristica -->
             <% if (catg !== Nuevcatg) { %>
-                <h2>Caracteristicas:  <%= catg %></h2>
-                <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
-                
-              
-                <% if (Nuevcatg !== null){ %>
-
-                    <% SumResA.push(Suma) %>
-                    <% Suma = 0 %>
-                    <% CatName.push(Nuevcatg) %>
-                <% } %>
-                <% Nuevcatg = catg %>
-                <% rn = [] %>
-                <% Sb = [] %>
-
-            <% } %>
-
-            <!-- SubCategorias -->
-            <% if (Subc !== SubcNueva) { %>
-                <% rn = [] %>
-                <h5><%= res.SubCategorias %></h5>
-
-                <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
-                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                <% Suma = Suma + parseInt(res.respuesta) %>
-                <!-- guardando los datos al array  -->
-                <% Sb.push(res.SubCategorias.toString()) %>
-                <% rn.push(res.respuesta) %>
                 
 
-                <% SubcNueva = Subc %>
-            <% } else { %>
-
-                <% Suma = Suma + (res.respuesta === 'ND' ? 0 : parseInt(res.respuesta, 10)) %>
-                <% rn.push(res.respuesta) %>
-                <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
-                <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
-
-                <!-- Incluye el canvas dentro del bucle para cada gráfico -->
-                <div class="chart-container1" >
-                    <canvas id="myChart<%= catg + index %>"></canvas>
-                </div>
-
-                <div class="cont1">
-
-                    <p>Comentarios del evaluador: </p>
-                    <h5><%= res.comentario %></h5>
+                    <h2>Caracteristicas:  <%= catg %></h2>
+                    <% ArrResultado.push({ tipo: 'Caracteristica', valor: catg }) %>
                     
+                  
+                    <% if (Nuevcatg !== null){ %>
+    
+                        <% SumResA.push(Suma) %>
+                        <% Suma = 0 %>
+                        <% CatName.push(Nuevcatg) %>
+                    <% } %>
+                    <% Nuevcatg = catg %>
+                    <% rn = [] %>
+                    <% Sb = [] %>
+    
+                    <% } %>
+    
+                <!-- SubCategorias -->
+                <% if (Subc !== SubcNueva) { %>
+                    <% rn = [] %>
+                    <h4><%= res.SubCategorias %></h4>
+    
+                    <% ArrResultado.push({ tipo: 'SubCategoria', valor: res.SubCategorias }) %>
+                    <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                    <% Suma = Suma + parseInt(res.respuesta) %>
+                    <!-- guardando los datos al array  -->
+                    <% Sb.push(res.SubCategorias.toString()) %>
+                    <% rn.push(res.respuesta) %>
+                    
+    
+                    <% SubcNueva = Subc %>
+                <% } else { %>
+    
+                    <% Suma = Suma + (res.respuesta === 'ND' ? 0 : parseInt(res.respuesta, 10)) %>
+                    <% rn.push(res.respuesta) %>
+                    <% ArrResultado.push({ tipo: 'Respuesta', valor: res.respuesta }) %>
+                    <% ArrResultado.push({ tipo: 'Comentario', valor: res.comentario }) %>
+    
+                    <!-- Incluye el canvas dentro del bucle para cada gráfico -->
+                    <div class="chart-container1" >
+                        <canvas id="myChart<%= catg + index %>"></canvas>
+                    </div>
+    
+                    <div class="cont1">
+    
+                        <h5>Comentarios del evaluador: </h5>
+                        <h5><%= res.comentario %></h5>
+                        
+                    </div>
+
                 </div>
             <% } %>
 
 
-
+        
 
            <!-- Configuración y datos para la gráfica -->
            <script>
@@ -116,10 +138,10 @@
             var dataValues = rest.map(item => item.valor);
                 // Función para generar un color aleatorio en formato rgba
                 function getRandomColor() {
-                    var r = Math.floor(Math.random() * 256);
-                    var g = Math.floor(Math.random() * 256);
-                    var b = Math.floor(Math.random() * 256);
-                    var alpha = 0.2; // Puedes ajustar la transparencia aquí
+                    var r = Math.floor(Math.random() * 101) + 100; // Rango entre 100 y 200
+                    var g = Math.floor(Math.random() * 101) + 100; // Rango entre 100 y 200
+                    var b = Math.floor(Math.random() * 101) + 100; // Rango entre 100 y 200
+                    var alpha = 1; // Ajusta aquí la transparencia
                     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
                 }
 
@@ -139,11 +161,25 @@
                     }]
                 };
             var options = {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+                    scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                            },
+                            plugins: {
+                            legend: {
+                                labels: {
+                                font: {
+                                    size: 14 // Tamaño del texto de la leyenda
+                                }
+                                }
+                            },
+                            tooltip: {
+                                bodyFont: {
+                                size: 14 // Tamaño del texto en el tooltip
+                                }
+                            }
+                            }
             };
             var myChart = new Chart(ctx, {
                 type: 'bar', // Cambiado a 'bar' para un gráfico de barras
@@ -158,12 +194,12 @@
         <% SumResA.push(Suma) %>
         <% Suma = 0 %>
         <% CatName.push(Nuevcatg) %>
-
+        <h1>Total de puntos obtenidos por categorias</h1>
         <div class="chart-container2" >
             <canvas id="mydChart"></canvas>
         </div>
     </div>
-
+</div>
     <script>
         var SumArrs = JSON.parse('<%- JSON.stringify(SumResA) %>');
         var NameArrs = JSON.parse('<%- JSON.stringify(CatName) %>');
@@ -185,12 +221,13 @@
         const respuestaData = JSON.parse(jsonString);
     
         // Función para generar un color aleatorio en formato rgba
-        function getRandomColor(alpha) {
-            var r = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        }
+        function getRandomColor() {
+                var r = Math.floor(Math.random() * 101) + 100; // Rango entre 100 y 200
+                var g = Math.floor(Math.random() * 101) + 100; // Rango entre 100 y 200
+                var b = Math.floor(Math.random() * 101) + 100; // Rango entre 100 y 200
+                var alpha = 1; // Ajusta aquí la transparencia
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
     
         var backgroundColors = Array.from({ length: NameArrs.length }, () => getRandomColor(0.2));
         var borderColors = backgroundColors.map(color => color.replace('0.2', '1'));
@@ -216,14 +253,33 @@
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+                        y: {
+                            beginAtZero: true
+                        }
+                        },
+                        plugins: {
+                        legend: {
+                            labels: {
+                            font: {
+                                size: 14 // Tamaño del texto de la leyenda
+                            }
+                            }
+                        },
+                        tooltip: {
+                            bodyFont: {
+                            size: 14 // Tamaño del texto en el tooltip
+                            }
+                        }
+                        }
             }
         });
     </script>
     
+
+
+        <h1 class="tituloG">Gracias</h1>
+
+
 </body>
 
 </html>
